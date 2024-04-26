@@ -1,0 +1,6 @@
+---
+const { url } = Astro.props;
+const { title } = Astro.props;
+---
+
+<li><a href={typeof url === "string" ? url : "bb"}>{title}</a></li>
