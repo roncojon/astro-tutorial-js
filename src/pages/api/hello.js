@@ -1,5 +1,7 @@
 import { number, fetchError, initialized, resetInitialization, initPromise } from '../../utils/utilsGlobal.js';
 
+export const prerender = false;
+
 console.log('numbernumber', number);
 
 export async function GET() {
