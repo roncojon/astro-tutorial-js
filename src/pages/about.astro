@@ -1,22 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import "../styles/global.css";
-
 const pageTitle = "About Me";
-
+const happy = true;
+const finished = true;
+const goal = 3;
 const identity = {
   firstName: "Sarah",
   country: "Canada",
   occupation: "Technical Writer",
   hobbies: ["photography", "birdwatching", "baseball"],
 };
-
 const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
-
-const happy = true;
-const finished = false;
-const goal = 3;
-
 const skillColor = "navy";
 const fontWeight = "bold";
 const textCase = "uppercase";
@@ -59,14 +53,14 @@ const textCase = "uppercase";
   {happy && <p>I am happy to be learning Astro!</p>}
 
   {finished && <p>I finished this tutorial!</p>}
-
+<!-- 
   {
     goal === 3 ? (
       <p>My goal is to finish in 3 days.</p>
     ) : (
       <p>My goal is not 3 days.</p>
     )
-  }
+  } -->
 </BaseLayout>
 
 <style define:vars={{ skillColor, fontWeight, textCase }}>
