@@ -1,4 +1,4 @@
-export const prerender = false;
+// export const prerender = false;
 
 let number;
 let fetchError;
