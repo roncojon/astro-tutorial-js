@@ -1,6 +1,5 @@
 import { number, fetchError, resetInitialization, initPromise } from '../../utils/utilsGlobal.js';
 
-// http://localhost:4321/api/hello 
 export const prerender = false;
 
 
