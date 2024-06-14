@@ -28,6 +28,7 @@ export async function GET() {
   );
 }
 
+// http://localhost:4321/api/hello 
 export async function POST() {
   // Trigger re-initialization
   resetInitialization();
