@@ -9,6 +9,9 @@ console.log("singlePost", allPosts[0]);
 console.log("frontmatterrr", allPosts[0].frontmatter);
 const pageTitle = "My Astro Learning Blog";
 
+export const prerender = false;
+
+
 if (!initialized) {
     await initPromise; // Await the promise to ensure initialization is complete
   }
