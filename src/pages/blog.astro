@@ -3,6 +3,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogPost from "../components/BlogPost.astro";
 import { initPromise, initialized, number } from "../utils/utilsGlobal";
 // import "../styles/global.css";
+
+export const prerender = false;
+
 const allPosts = await Astro.glob("../pages/posts/*.md");
 console.log("allPosts", allPosts);
 console.log("singlePost", allPosts[0]);
