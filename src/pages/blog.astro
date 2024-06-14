@@ -12,8 +12,6 @@ console.log("singlePost", allPosts[0]);
 console.log("frontmatterrr", allPosts[0].frontmatter);
 const pageTitle = "My Astro Learning Blog";
 
-
-
 if (!initialized) {
     await initPromise; // Await the promise to ensure initialization is complete
   }
@@ -21,7 +19,7 @@ if (!initialized) {
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h2>This is the number:{num}</h2>
+  <!-- <h2>This is the number:{num}</h2> -->
   <p>This is where I will post about my journey learning Astro.</p>
   <ul>
     <!-- <li><a href="/posts/post-1/">Post 1</a></li>
