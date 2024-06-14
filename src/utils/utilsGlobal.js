@@ -1,3 +1,5 @@
+export const prerender = false;
+
 let number;
 let fetchError;
 let initialized = false;
