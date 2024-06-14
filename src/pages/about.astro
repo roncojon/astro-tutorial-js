@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { initPromise, resetInitialization } from "../utils/utilsGlobal";
+
+export const prerender = false;
+
 const pageTitle = "About Me";
 const happy = true;
 const finished = true;
@@ -15,6 +18,8 @@ const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
 const skillColor = "navy";
 const fontWeight = "bold";
 const textCase = "uppercase";
+
+
  // Trigger re-initialization
  resetInitialization();
   
