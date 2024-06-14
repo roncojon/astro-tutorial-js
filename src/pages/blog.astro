@@ -2,6 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogPost from "../components/BlogPost.astro";
 import { initPromise, initialized, number } from "../utils/utilsGlobal";
+
+export const prerender = false;
+
 // import "../styles/global.css";
 const allPosts = await Astro.glob("../pages/posts/*.md");
 console.log("allPosts", allPosts);
@@ -9,7 +12,6 @@ console.log("singlePost", allPosts[0]);
 console.log("frontmatterrr", allPosts[0].frontmatter);
 const pageTitle = "My Astro Learning Blog";
 
-export const prerender = false;
 
 
 if (!initialized) {
