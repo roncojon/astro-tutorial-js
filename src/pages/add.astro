@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export const prerender = false;
+---
+
+<BaseLayout title="Add a new friend">
+  <h1>Add a new friend</h1>
+  <form method="post" action="/api/friends">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" />
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" />
+    <label for="isBestFriend">Is best friend?</label>
+    <input type="checkbox" id="isBestFriend" name="isBestFriend" />
+    <button type="submit">Add friend</button>
+  </form>
+</BaseLayout>

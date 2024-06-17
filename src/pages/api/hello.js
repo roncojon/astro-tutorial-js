@@ -1,4 +1,4 @@
-import { number, fetchError, initialized, resetInitialization, initPromise } from '../../utils/utilsGlobal.js';
+import { number, fetchError, initialized, resetInitialization, initPromise } from '../../utils/utilsGlobalFetchTest';
 
 export const prerender = false;
 
