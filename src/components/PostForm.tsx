@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import TinyMCEEditor from './TinyMCEEditor'; // Fix import
 
-export const prerender = false;
+// export const prerender = false;
 
 const PostForm = () => {
   const [editorContent, setEditorContent] = useState('');
@@ -14,9 +14,9 @@ const PostForm = () => {
       title: formData.get('title'),
       content: editorContent,
     };
-    console.log('import.meta.env.FIREBASE_PROJECT_ID', import.meta.env.FIREBASE_PROJECT_ID);
+    console.log('import.meta.env.FIREBASE_PROJECT_ID', import.meta.env.PUBLIC_FIREBASE_PROJECT_ID);
+    // console.log('process.env.FIREBASE_PROJECT_ID', process.env.VITE_FIREBASE_PROJECT_ID);
     console.log('metameta',import.meta.env)
-
 
     // Create postData ensuring it's a plain object
     const postData = {

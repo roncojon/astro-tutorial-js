@@ -22,6 +22,8 @@ const initApp = () => {
     return initializeApp()
   }
   console.info('Loading service account from env.')
+// console.log('import.meta.env.FIREBASE_CLIENT_EMAIL', import.meta.env.FIREBASE_CLIENT_EMAIL)
+
   return initializeApp({
     credential: cert(serviceAccount as ServiceAccount)
   })

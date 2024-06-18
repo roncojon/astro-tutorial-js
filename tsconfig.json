@@ -14,7 +14,7 @@
     },
     "types": ["vite/client"]
   },
-  "include": ["src"]
+  "include": ["src", "public/env.d.ts"]
   }
 
 
