@@ -1,7 +1,20 @@
 {
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "ESNext"],
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "react",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["vite/client"]
+  },
+  "include": ["src"]
   }
-}
+
+

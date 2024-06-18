@@ -1,6 +1,5 @@
 // src/components/FriendForm.jsx
-import { h } from 'preact';
-import { useState } from 'preact/hooks';
+import { useState } from 'react';
 
 const FriendForm = () => {
   const [name, setName] = useState('');

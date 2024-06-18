@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState } from "react";
 
 export default function Greeting({ messages }) {
   const [greeting, setGreeting] = useState(messages[0]);

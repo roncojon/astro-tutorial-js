@@ -4,6 +4,9 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 const { pageTitle } = Astro.props;
+
+console.log('import.meta.env.FIREBASE_PROJECT_ID', import.meta.env.FIREBASE_PROJECT_ID);
+    console.log('metameta',import.meta.env)
 ---
 <html lang="en">
   <head>
@@ -11,6 +14,7 @@ const { pageTitle } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <!-- <script src="https://cdn.tiny.cloud/1/vsjb36bpwc9tukvutqh2wwhje0dfnurjvblcfcfi361mtd1k/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> -->
     <title>{pageTitle}</title>
     <ViewTransitions />
   </head>
