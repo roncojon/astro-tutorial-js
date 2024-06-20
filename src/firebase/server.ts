@@ -6,7 +6,7 @@ export const prerender = false;
 const activeApps = getApps();
 const serviceAccount = {
   type: "service_account",
-  project_id: import.meta.env.FIREBASE_PROJECT_ID,
+  project_id: import.meta.env.PROJECT_ID,
   private_key_id: import.meta.env.FIREBASE_PRIVATE_KEY_ID,
   private_key: import.meta.env.FIREBASE_PRIVATE_KEY,
   client_email: import.meta.env.FIREBASE_CLIENT_EMAIL,
