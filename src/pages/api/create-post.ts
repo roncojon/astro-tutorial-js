@@ -7,7 +7,7 @@ import { getFirestore } from "firebase-admin/firestore";
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
-  // console.log('requestrequest', request);
+  console.log('requestrequest', request);
 
   try {
     const db = getFirestore(app);
