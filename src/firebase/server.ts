@@ -1,6 +1,8 @@
 import type { ServiceAccount } from "firebase-admin";
 import { initializeApp, cert, getApps } from "firebase-admin/app";
 
+export const prerender = false;
+
 const activeApps = getApps();
 const serviceAccount = {
   type: "service_account",
