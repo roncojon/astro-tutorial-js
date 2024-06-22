@@ -16,6 +16,9 @@ export const POST: APIRoute = async ({ request }) => {
     console.log('postDatapostData', postData);
 
     const postRef = await db.collection('posts');
+    console.log('dbdbdb', db);
+    console.log('dbCollectionPosts', db.collection('posts'));
+
     await postRef.add({
       title:postData.title,
       content:postData.content,
