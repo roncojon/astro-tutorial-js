@@ -1,0 +1,33 @@
+---
+import { getFirestore } from "firebase-admin/firestore";
+import { app } from "../../firebase/server";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const db = getFirestore(app);
+  const snapshot = await db.collection("posts").get();
+  const paths = snapshot.docs.map(doc => ({
+    params: { id: doc.id },
+  }));
+
+  return paths; // Return the array of paths
+}
+
+const { id } = Astro.params;
+
+const db = getFirestore(app);
+const doc = await db.collection("posts").doc(id).get();
+
+if (!doc.exists) {
+  throw new Error(`Post with id: ${id} not found`);
+}
+
+const post:any = { id: doc.id, ...doc.data() };
+
+const pageTitle = post.title;
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <!-- <h1>{post.title}</h1> -->
+  <div set:html={post.content}></div>
+</BaseLayout>
