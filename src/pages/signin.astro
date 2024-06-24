@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { app } from "../firebase/server";
+import { serverApp } from "../firebase/server";
 import { getAuth } from "firebase-admin/auth";
 
 export const prerender = false;
 
 /* Check if the user is authenticated */
-const auth = getAuth(app);
+const auth = getAuth(serverApp);
 if (Astro.cookies.has("__session")) {
   const sessionCookie = Astro.cookies.get("__session")?.value;
   const decodedCookie = await auth.verifySessionCookie(sessionCookie ?? "");

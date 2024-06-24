@@ -1,24 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogPost from "../components/BlogPost.astro";
-import { app } from "../firebase/server";
-import { getFirestore } from "firebase-admin/firestore";
-
-interface Post {
-  id: string;
-  title: string;
-  content: string;
-}
-
-const db = getFirestore(app);
-
-const allPosts: Post[] = [];
-const snapshot = await db.collection("posts").get();
-
-snapshot.forEach((doc) => {
-  const data = doc.data();
-  allPosts.push({ id: doc.id, title: data.title, content: data.content });
-});
+import { serverAllPosts } from "@/firebase/database/serverAllPosts";
 
 const pageTitle = "My Astro Learning Blog";
 ---
@@ -27,72 +10,9 @@ const pageTitle = "My Astro Learning Blog";
   <h2>Here you can see all the posts:</h2>
   <ul>
     {
-      allPosts.map((post) => (
+      serverAllPosts.map((post) => (
         <BlogPost url={`/posts/${post.id}`} title={post.title} />
       ))
     }
   </ul>
 </BaseLayout>
-
-
-<!-- ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import BlogPost from "../components/BlogPost.astro";
-import { app } from "../firebase/server";
-import { getFirestore } from "firebase-admin/firestore";
-
-interface Post {
-  id: string;
-  title: string;
-  content: string;
-}
-
-const db = getFirestore(app);
-
-const allPosts: Post[] = [];
-const snapshot = await db.collection("posts").get();
-
-snapshot.forEach((doc) => {
-  console.log('docdocdoc',doc)
-  const data = doc.data();
-  console.log('datadatadata',data)
-  allPosts.push({ id: doc.id, title: data.title, content: data.content });
-});
-console.log('allPosts',allPosts)
-
-const pageTitle = "My Astro Learning Blog";
----
-
-<BaseLayout pageTitle={pageTitle}>
-  <p>Here you can see all the posts</p>
-  <ul>
-    {
-      allPosts.map((post) => (
-        <BlogPost url={`/posts/${post.id}`} title={post.title} />
-      ))
-    }
-  </ul>
-</BaseLayout> -->
-
-
-<!-- ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import BlogPost from "../components/BlogPost.astro";
-// import "../styles/global.css";
-const allPosts = await Astro.glob("../pages/posts/*.md");
-console.log("allPosts", allPosts);
-console.log("singlePost", allPosts[0]);
-console.log("frontmatterrr", allPosts[0].frontmatter);
-const pageTitle = "My Astro Learning Blog";
----
-
-<BaseLayout pageTitle={pageTitle}>
-  <p>This is where I will post about my journey learning Astro.</p>
-  <ul>
-    {
-      allPosts.map((post) => (
-        <BlogPost url={post.url} title={post.frontmatter.title} />
-      ))
-    }
-  </ul>
-</BaseLayout> -->

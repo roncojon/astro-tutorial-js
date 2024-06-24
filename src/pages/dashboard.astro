@@ -1,11 +1,11 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { app } from "../firebase/server";
+import { serverApp } from "../firebase/server";
 import { getAuth } from "firebase-admin/auth";
 
 export const prerender = false;
 
-const auth = getAuth(app);
+const auth = getAuth(serverApp);
 
 /* Check current session */
 if (!Astro.cookies.has("__session")) {

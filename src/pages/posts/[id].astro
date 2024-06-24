@@ -1,10 +1,10 @@
 ---
 import { getFirestore } from "firebase-admin/firestore";
-import { app } from "../../firebase/server";
+import { serverApp } from "../../firebase/server";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const db = getFirestore(app);
+  const db = getFirestore(serverApp);
   const snapshot = await db.collection("posts").get();
   const paths = snapshot.docs.map(doc => ({
     params: { id: doc.id },
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 const { id } = Astro.params;
 
-const db = getFirestore(app);
+const db = getFirestore(serverApp);
 const doc = await db.collection("posts").doc(id).get();
 
 if (!doc.exists) {
