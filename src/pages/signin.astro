@@ -36,11 +36,11 @@ if (Astro.cookies.has("__session")) {
     inMemoryPersistence,
     signInWithEmailAndPassword,
   } from "firebase/auth";
-  //   import { app } from "../firebase/client";
-  import { app } from "../firebase/client";
+    import { clientApp } from "../firebase/client";
+  // import { app } from "../firebase/client";
 
-  console.log('appappappapp',app)
-  const auth = getAuth(app);
+  console.log('appappappapp',clientApp)
+  const auth = getAuth(clientApp);
   // This will prevent the browser from storing session data
   auth.setPersistence(inMemoryPersistence);
 

@@ -6,7 +6,7 @@ import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export const prerender = false;
+// export const prerender = false;
 
 const firebaseConfig = {
   apiKey: import.meta.env.PUBLIC_FIREBASE_API_KEY,
@@ -19,5 +19,5 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-// export const clientApp = initializeApp(firebaseConfig);
+export const clientApp = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(clientApp);
