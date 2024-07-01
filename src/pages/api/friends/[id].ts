@@ -34,7 +34,7 @@ export const POST: APIRoute = async ({ params, redirect, request }) => {
       status: 500,
     });
   }
-  return redirect("/dashboard");
+  return redirect("/post-editor");
 };
 
 export const DELETE: APIRoute = async ({ params, redirect }) => {
@@ -51,5 +51,5 @@ export const DELETE: APIRoute = async ({ params, redirect }) => {
       status: 500,
     });
   }
-  return redirect("/dashboard");
+  return redirect("/post-editor");
 };

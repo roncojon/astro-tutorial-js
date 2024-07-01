@@ -2,8 +2,6 @@ import { number, fetchError, initialized, resetInitialization, initPromise } fro
 
 export const prerender = false;
 
-console.log('numbernumber', number);
-
 export async function GET() {
   // Ensure the initialization has completed
   if (!initialized) {

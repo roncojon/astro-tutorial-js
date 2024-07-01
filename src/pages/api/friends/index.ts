@@ -5,7 +5,6 @@ export const prerender = false;
 
 export const POST: APIRoute = async ({ request, redirect }) => {
   const actualRquest = await request;
-  console.log('actualRequest', actualRquest);
   const formData = await request.formData();
   const name = formData.get("name")?.toString();
   const age = formData.get("age")?.toString();
@@ -29,5 +28,5 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       status: 500,
     });
   }
-  return redirect("/dashboard");
+  return redirect("/post-editor");
 };

@@ -1,6 +1,7 @@
 import { Editor } from '@tinymce/tinymce-react';
 import { useRef } from 'react';
-
+// import allCss from '@/styles/global.css';
+// import  '../../public/styles/global.css';
 export const prerender = false;
 
 interface TinyMCEEditorProps {
@@ -22,13 +23,14 @@ const TinyMCEEditor = ({ onContentChange }: TinyMCEEditorProps) => {
           plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'quickbars'
+            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'quickbars, preview'
           ],
-          toolbar: 'undo redo | blocks | ' +
-            'bold italic forecolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+          toolbar: 'undo redo | preview | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+          quickbars_selection_toolbar: 'bold italic | quicklink h1 h2 h3 blockquote quickimage quicktable',
+          quickbars_insert_toolbar: 'bold italic | quicklink h1 h2 h3 blockquote quickimage quicktable',
+          // content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+          // content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } p { background-color: red; }',
+          content_css: '../../public/styles/editor.css',
           setup: (editor) => {
             editor.on('Change', () => {
               onContentChange(editor.getContent(/* { format: 'html' } */));

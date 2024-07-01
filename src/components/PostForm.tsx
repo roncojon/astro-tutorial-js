@@ -29,7 +29,6 @@ const PostForm = () => {
         body: JSON.stringify(postData),
       });
 
-console.log('createPostResponse',response);
 
       if (response.ok) {
         alert('Post created successfully');
@@ -49,7 +48,7 @@ console.log('createPostResponse',response);
       </div>
       <div>
         <label htmlFor="content">Content</label>
-        <TinyMCEEditor onContentChange={(c) => { console.log('contentChange', c); setEditorContent(c); }} />
+        <TinyMCEEditor onContentChange={(c) => { setEditorContent(c); }} />
       </div>
       <button type="submit">Create Post</button>
     </form>

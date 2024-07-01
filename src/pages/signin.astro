@@ -14,7 +14,7 @@ if (Astro.cookies.has("__session")) {
   //   const sessionCookie = Astro.cookies?.get("__session")?.value;
   //   const decodedCookie = await auth.verifySessionCookie(sessionCookie ?? "");
   if (decodedCookie) {
-    return Astro.redirect("/dashboard");
+    return Astro.redirect("/post-editor");
   }
 }
 ---
@@ -39,14 +39,12 @@ if (Astro.cookies.has("__session")) {
     import { clientApp } from "../firebase/client";
   // import { app } from "../firebase/client";
 
-  console.log('appappappapp',clientApp)
   const auth = getAuth(clientApp);
   // This will prevent the browser from storing session data
   auth.setPersistence(inMemoryPersistence);
 
   const form = document.querySelector("form") as HTMLFormElement;
   form.addEventListener("submit", async (e) => {
-    console.log('submitEvent',e);
     e.preventDefault();
     const formData = new FormData(form);
     const email = formData.get("email")?.toString();

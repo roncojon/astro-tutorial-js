@@ -24,7 +24,6 @@ const FriendForm = () => {
     });
 
     if (response.ok) {
-      console.log('Friend added successfully');
       // Handle success (e.g., clear the form, show a message, etc.)
     } else {
       console.error('Error adding friend');
