@@ -3,7 +3,7 @@ export const prerender = false;
 export async function GET() {
     try {
       const response = await fetch('https://api.vercel.com/v1/integrations/deploy/prj_SR3scROY9yBxcgojAqe5oPi4Av8H/oPosmDNgpn'); // Replace with your target endpoint URL
-      
+      console.log(response);
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
