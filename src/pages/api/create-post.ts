@@ -21,8 +21,14 @@ export const POST: APIRoute = async ({ request }) => {
     console.log('dbCollectionPosts', db.collection('posts'));
 
     // Call the redeploy endpoint
-    const redeployResponse = await fetch('/api/redeploy');
-
+    const redeployResponse = await fetch('/api/redeploy').then((res) => { console.log('aaaaaaaaares',res);return res.json()});
+    // , {
+      // method: "GET",
+      // headers: {
+      //   Authorization: `Bearer ${idToken}`,
+      // },
+    // });
+console.log('redeployResponse', redeployResponse);
     if (!redeployResponse.ok) {
       throw new Error(`Redeploy failed: ${redeployResponse.statusText}`);
     }
