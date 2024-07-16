@@ -1,6 +1,8 @@
+import type { APIRoute } from "astro";
+
 export const prerender = false;
 
-export async function GET() {
+export const GET:APIRoute=async ()=> {
   console.log('startingRedeploy0')
 
   try {
@@ -22,7 +24,7 @@ export async function GET() {
   } catch (error) {
     console.log('redeployError', error);
     return new Response(
-      JSON.stringify({ error: /* error?.message ??  */'' }), // Correctly stringify the error message
+      JSON.stringify({ error: error ?? '' }), // Correctly stringify the error message
       {
         headers: { 'Content-Type': 'application/json' },
         status: 500,

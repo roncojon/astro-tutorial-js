@@ -21,7 +21,7 @@ const PostForm = () => {
     };
 
     try {
-      const response = await fetch('/api/create-post', {
+      const response = await fetch('/api/createpost', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

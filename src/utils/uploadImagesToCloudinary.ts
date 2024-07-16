@@ -5,7 +5,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const uploadImage = async (file) => {
+const uploadImage = async (file: { path: string; }) => {
   try {
     const result = await cloudinary.uploader.upload(file.path);
     return result.secure_url; // This is the URL of the uploaded image
