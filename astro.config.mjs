@@ -8,6 +8,6 @@ export default defineConfig({
   adapter: vercel({
     edgeMiddleware: true
   }),
-  site: "https://astro-tutorial-js.vercel.app/",
+  site: "https://irachile.com/", // "https://astro-tutorial-js.vercel.app/",
   integrations: [react()]
 });
