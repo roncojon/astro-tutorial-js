@@ -21,10 +21,10 @@ export const POST: APIRoute = async ({ request }) => {
     console.log('Firestore collection (posts):', db.collection('posts'));
 
     // Determine the base URL
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 
-    (import.meta.env.VERCEL_URL ? `https://${import.meta.env.VERCEL_URL}` : 'http://localhost:4321');
-    console.log('process.env.VERCEL_URL',process.env.VERCEL_URL)
-    console.log('import.meta.env.VERCEL_URL',import.meta.env.VERCEL_URL)
+    const baseUrl = process.env.MY_WEBSITE_URL ? `https://${process.env.MY_WEBSITE_URL}` : 
+    (import.meta.env.MY_WEBSITE_URL ? `https://${import.meta.env.MY_WEBSITE_URL}` : 'http://localhost:4321');
+    console.log('process.env.MY_WEBSITE_URL',process.env.MY_WEBSITE_URL)
+    console.log('import.meta.env.MY_WEBSITE_URL',import.meta.env.MY_WEBSITE_URL)
     const redeployUrl = `${baseUrl}/api/redeploy`;
 
     // Call the redeploy endpoint
