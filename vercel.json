@@ -1,6 +1,6 @@
 {
     "functions": {
-      "api/createpost.ts": {
+      "src/pages/api/createpost.ts": {
         "maxDuration": 60
       }
     }
