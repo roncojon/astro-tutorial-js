@@ -1,57 +1,87 @@
-import { useState } from 'react';
-import TinyMCEEditor from './TinyMCEEditor'; // Fix import
+// Import necessary hooks and components
+import { useState, useEffect } from 'react';
+import TinyMCEEditor from './TinyMCEEditor';
 
-// export const prerender = false;
+// Define the props for the PostForm component
+type PostFormProps = {
+  postId?: string; // postId is optional because it's not needed when creating a new post
+}
 
-const PostForm = () => {
+// Define the PostForm component
+const PostForm = ({ postId }:PostFormProps) => {
+  // Initialize state variables for the editor content and the post title
   const [editorContent, setEditorContent] = useState('');
+  const [title, setTitle] = useState('');
 
-  const handleSubmit = async (e: { preventDefault: () => void; target: any; }) => {
+  // Use the useEffect hook to fetch post data when the component mounts
+  // and whenever the postId prop changes
+  useEffect(() => {
+    if (postId) {
+      // If postId is provided, we're in edit mode, so fetch the post data
+      fetch(`/api/getpost?id=${postId}`)
+        .then(response => response.json())
+        .then(data => {
+          // Update the state variables with the fetched data
+          setTitle(data.title);
+          setEditorContent(data.content);
+        });
+    }
+  }, [postId]);
+
+  // Define the handleSubmit function that will be called when the form is submitted
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    const data = {
-      title: formData.get('title'),
-      content: editorContent,
-    };
-    // Create postData ensuring it's a plain object
-    const postData = {
-      title: formData.get('title'),
+    // Prepare the form data
+    const formData = {
+      title,
       content: editorContent,
     };
 
     try {
-      const response = await fetch('/api/createpost', {
+      // Determine the URL based on whether we're creating or updating a post
+      const url = postId ? `/api/updatepost?id=${postId}` : '/api/createpost';
+      // Send a POST request to the appropriate URL
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(formData),
       });
 
-console.log('createPostResponse',response);
-
+      // Check the response status and show an alert message
       if (response.ok) {
-        alert('Post created successfully');
+        alert(`Post ${postId ? 'updated' : 'created'} successfully`);
       } else {
-        alert('Failed to create post');
+        alert(`Failed to ${postId ? 'update' : 'create'} post`);
       }
     } catch (err) {
-      alert('Error creating post');
+      alert(`Error ${postId ? 'updating' : 'creating'} post`);
     }
   };
 
+  // Render the form
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="title">Title</label>
-        <input type="text" id="title" name="title" required />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
       </div>
       <div>
         <label htmlFor="content">Content</label>
-        <TinyMCEEditor onContentChange={(c) => { console.log('contentChange', c); setEditorContent(c); }} />
+        <TinyMCEEditor
+          initialValue={editorContent}
+          onContentChange={(c) => setEditorContent(c)}
+        />
       </div>
-      <button type="submit">Create Post</button>
+      <button type="submit">{postId ? 'Update' : 'Create'} Post</button>
     </form>
   );
 };

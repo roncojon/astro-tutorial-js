@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { initPromise, resetInitialization, number } from "../utils/utilsGlobalFetchTest";
 
 export const prerender = false;
 
@@ -19,18 +18,10 @@ const skillColor = "navy";
 const fontWeight = "bold";
 const textCase = "uppercase";
 
-
- // Trigger re-initialization
- resetInitialization();
-  
-  // Wait for the initialization to complete
-  await initPromise;
-  const numm = number;
 ---
 
 <BaseLayout pageTitle={pageTitle}>
   <h2>Opening this page refetches a number.</h2>
-  <h2>... and my new numberrrr is:{numm}</h2>
   <h2>... and my new Astro site!</h2>
 
   <p>

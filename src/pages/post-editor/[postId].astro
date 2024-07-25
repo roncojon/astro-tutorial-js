@@ -1,0 +1,15 @@
+---
+import PostForm from "../../components/PostForm";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = false;
+
+const postId = Astro.params.postId !== 'new' ? Astro.params.postId : null;
+
+console.log('Astro.params.postIdAstro.params.postId',Astro.params.postId)
+const pageTitle = postId ? "Edit Post" : "Create Post";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <PostForm client:load postId={postId ?? undefined} />
+</BaseLayout>

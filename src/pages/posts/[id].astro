@@ -29,5 +29,8 @@ const pageTitle = post.title;
 
 <BaseLayout pageTitle={pageTitle}>
   <!-- <h1>{post.title}</h1> -->
-  <div set:html={post.content}></div>
+  <div 
+  style="display: flex; flex-direction: column; width:100%"
+  set:html={post.content}>
+</div>
 </BaseLayout>
