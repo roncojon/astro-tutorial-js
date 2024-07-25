@@ -1,10 +1,20 @@
+import { allowedOrigins, checkOrigin } from '@/utils/originUtils';
 import { number, fetchError, initialized, resetInitialization, initPromise } from '../../utils/utilsGlobalFetchTest';
 
 export const prerender = false;
 
 console.log('numbernumber', number);
 
-export async function GET() {
+export async function GET({request}) {
+  if (!checkOrigin(request, allowedOrigins)) {
+    console.log('ForbiddenHello');
+    return new Response(JSON.stringify({ error: 'Forbidden' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  console.log('AllowHello');
+
   // Ensure the initialization has completed
   if (!initialized) {
     await initPromise; // Await the promise to ensure initialization is complete

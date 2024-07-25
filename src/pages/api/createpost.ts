@@ -3,6 +3,7 @@ import { serverApp } from '../../firebase/server';
 import { getFirestore } from 'firebase-admin/firestore';
 import { v2 as cloudinary } from 'cloudinary';
 import { JSDOM } from 'jsdom';
+import { allowedOrigins, checkOrigin } from '@/utils/originUtils';
 
 cloudinary.config({
   cloud_name: import.meta.env.CLOUDINARY_CLOUD_NAME,
@@ -40,6 +41,15 @@ const processHtmlContent = async (htmlContent: string) => {
 
 export const POST: APIRoute = async ({ request }) => {
   console.log('Received request:', request);
+
+  if (!checkOrigin(request, allowedOrigins)) {
+    console.log('ForbiddenCreatePost');
+    return new Response(JSON.stringify({ error: 'Forbidden' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  console.log('CreatingPost');
 
   try {
     const db = getFirestore(serverApp);

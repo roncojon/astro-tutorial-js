@@ -1,9 +1,17 @@
+// import { allowedOrigins, checkOrigin } from "@/utils/originUtils";
 import type { APIRoute } from "astro";
 
 export const prerender = false;
 
-export const GET:APIRoute=async ()=> {
-  console.log('startingRedeploy0')
+export const GET:APIRoute=async ({request})=> {
+  console.log('startingRedeploy0request',request)
+  // if (!checkOrigin(request, allowedOrigins)) {
+  //   console.log('ForbiddenRedeploy');
+  //   return new Response(JSON.stringify({ error: 'Forbidden' }), {
+  //     status: 403,
+  //     headers: { 'Content-Type': 'application/json' },
+  //   });
+  // }
 
   try {
     console.log('startingRedeploy1')
