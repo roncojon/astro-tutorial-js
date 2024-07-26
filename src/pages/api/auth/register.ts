@@ -1,10 +1,18 @@
 import type { APIRoute } from "astro";
 import { getAuth } from "firebase-admin/auth";
 import { serverApp } from "../../../firebase/server";
+import { allowedOrigins, checkOrigin } from "@/utils/originUtils";
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, redirect }) => {
+    if (!checkOrigin(request, allowedOrigins)) {
+        return new Response(JSON.stringify({ error: 'Forbidden' }), {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      
     const auth = getAuth(serverApp);
     console.log('Received request:', request);
     
