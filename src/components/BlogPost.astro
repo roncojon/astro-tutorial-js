@@ -1,6 +1,65 @@
 ---
-const { url } = Astro.props;
-const { title } = Astro.props;
+const { url, title, postId } = Astro.props; // Destructure props to get the post URL, title, and postId
 ---
 
-<li><a href={typeof url === "string" ? url : "bb"}>{title}</a></li>
+<li style="display: flex; gap: 8px">
+  <a href={url}>{title}</a>
+  <!-- Use a custom element 'astro-delete' to handle the delete functionality -->
+  <astro-delete data-post-id={postId}>
+    <button class="delete-button">Delete</button>
+  </astro-delete>
+</li>
+
+<script type="module">
+  // Define the custom element 'astro-delete'
+  class AstroDelete extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    // This method is called when the element is added to the DOM
+    connectedCallback() {
+      // Get the postId from the data attribute
+      const postId = this.dataset.postId;
+      // Select the button element within this custom element
+      const button = this.querySelector('button');
+      
+      // If the button exists, add a click event listener to it
+      if (button) {
+        button.addEventListener('click', async () => {
+          // Confirm the deletion with the user
+          const confirmed = confirm('Are you sure you want to delete this post?');
+
+          // If confirmed, proceed with the delete operation
+          if (confirmed) {
+            try {
+              // Send a DELETE request to the server to delete the post
+              const response = await fetch('/api/deletepost', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: postId }),
+              });
+
+              // If the response is ok, alert the user and reload the page
+              if (response.ok) {
+                alert('Post deleted successfully');
+                location.reload();
+              } else {
+                // If the response is not ok, alert the user of the failure
+                alert('Failed to delete post');
+              }
+            } catch (err) {
+              // If there is an error in the try block, alert the user
+              alert('Error deleting post');
+            }
+          }
+        });
+      }
+    }
+  }
+
+  // Define the custom element 'astro-delete'
+  customElements.define('astro-delete', AstroDelete);
+</script>

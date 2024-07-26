@@ -11,7 +11,7 @@ const pageTitle = "My Astro Learning Blog";
   <ul>
     {
       serverAllPosts.map((post) => (
-        <BlogPost url={`/posts/${post.id}`} title={post.title} />
+          <BlogPost url={`/posts/${post.id}`} title={post.title} postId={post.id} />
       ))
     }
   </ul>
