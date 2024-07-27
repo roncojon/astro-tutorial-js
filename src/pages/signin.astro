@@ -1,16 +1,24 @@
 ---
+// Import necessary modules and components
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { serverApp } from "../firebase/server";
 import { getAuth } from "firebase-admin/auth";
 
+// Disable prerendering for this route
 export const prerender = false;
 
-/* Check if the user is authenticated */
+// Initialize Firebase Auth
 const auth = getAuth(serverApp);
+
+// Check if the user is authenticated
 if (Astro.cookies.has("__session")) {
+  // Get the session cookie
   const sessionCookie = Astro.cookies.get("__session")?.value;
+
+  // Verify the session cookie
   const decodedCookie = await auth.verifySessionCookie(sessionCookie ?? "");
 
+  // If the cookie is valid, redirect the user to the dashboard
   if (decodedCookie) {
     return Astro.redirect("/dashboard");
   }
@@ -20,45 +28,60 @@ if (Astro.cookies.has("__session")) {
 <BaseLayout title="Sign in">
   <h1>Sign in</h1>
   <p>New here? <a href="/register">Create an account</a></p>
+
+  <!-- Form for signing in -->
   <form method="post" action="/api/auth/signin">
-    <label for="email" for="email">Email</label>
+    <label for="email">Email</label>
     <input type="email" name="email" id="email" />
     <label for="password">Password</label>
     <input type="password" name="password" id="password" />
     <button type="submit">Login</button>
   </form>
 </BaseLayout>
+
 <script>
+  // Import necessary Firebase Auth functions and the Firebase client app
   import {
     getAuth,
     inMemoryPersistence,
     signInWithEmailAndPassword,
   } from "firebase/auth";
-    import { clientApp } from "../firebase/client";
-  // import { app } from "../firebase/client";
+  import { clientApp } from "../firebase/client";
 
-  console.log('appappappapp',clientApp)
+  // Initialize Firebase Auth
   const auth = getAuth(clientApp);
-  // This will prevent the browser from storing session data
+
+  // Set the persistence mode to in-memory, which prevents the browser from storing session data
   auth.setPersistence(inMemoryPersistence);
 
+  // Get the form element
   const form = document.querySelector("form") as HTMLFormElement;
+
+  // Add an event listener for the form submission
   form.addEventListener("submit", async (e) => {
-    console.log('submitEvent',e);
     e.preventDefault();
+
+    // Get the form data
     const formData = new FormData(form);
     const email = formData.get("email")?.toString();
     const password = formData.get("password")?.toString();
 
+    // If the email or password is missing, return early
     if (!email || !password) {
       return;
     }
+
+    // Sign in with email and password
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
+
+    // Get the ID token
     const idToken = await userCredential.user.getIdToken();
+
+    // Send a request to the sign-in API
     const response = await fetch("/api/auth/signin", {
       method: "GET",
       headers: {
@@ -66,6 +89,7 @@ if (Astro.cookies.has("__session")) {
       },
     });
 
+    // If the response is a redirect, follow the redirect
     if (response.redirected) {
       window.location.assign(response.url);
     }
