@@ -1,26 +1,21 @@
 ---
-// Import necessary modules and components
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { serverApp } from "../firebase/server";
 import { getAuth } from "firebase-admin/auth";
 
-// Disable prerendering for this route
 export const prerender = false;
 
-// Initialize Firebase Auth
 const auth = getAuth(serverApp);
 
-// Check if the user is authenticated
-if (Astro.cookies.has("__session")) {
-  // Get the session cookie
-  const sessionCookie = Astro.cookies.get("__session")?.value;
+const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
 
-  // Verify the session cookie
+/* Check if the user is authenticated */
+if (Astro.cookies.has("__session")) {
+  const sessionCookie = Astro.cookies.get("__session")?.value;
   const decodedCookie = await auth.verifySessionCookie(sessionCookie ?? "");
 
-  // If the cookie is valid, redirect the user to the dashboard
   if (decodedCookie) {
-    return Astro.redirect("/dashboard");
+    return Astro.redirect(redirectTo);
   }
 }
 ---
@@ -57,6 +52,9 @@ if (Astro.cookies.has("__session")) {
   // Get the form element
   const form = document.querySelector("form") as HTMLFormElement;
 
+  // Get the actual URL
+  const actualUrl = new URL(window.location.href);
+
   // Add an event listener for the form submission
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -78,11 +76,18 @@ if (Astro.cookies.has("__session")) {
       password
     );
 
+    // Extract the query parameters
+    const params = new URLSearchParams(actualUrl.search);
+    const redirect = params.get("redirect") || "/dashboard";
+
+    console.log("actualUrlQueryParams", params);
+    console.log("redirect", redirect);
+
     // Get the ID token
     const idToken = await userCredential.user.getIdToken();
 
-    // Send a request to the sign-in API
-    const response = await fetch("/api/auth/signin", {
+    // Send a request to the sign-in API with the redirect parameter as a query string
+    const response = await fetch(`/api/auth/signin?redirect=${encodeURIComponent(redirect)}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${idToken}`,

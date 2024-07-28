@@ -42,5 +42,6 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     path: "/",
   });
 
-  return redirect("/dashboard");
+  const redirectTo = new URL(request.url).searchParams.get('redirect') || '/dashboard';
+  return redirect(redirectTo);
 };
