@@ -1,23 +1,30 @@
 ---
 import BlogPost from "../../components/BlogPost.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getAllPosts, getAllTags } from "../../firebase/database/serverAllPosts";
+
+interface AstroPost {
+  frontmatter: {
+    title: string;
+  };
+  url: string;
+}
 
 // This function generates static paths for each unique tag
 export async function getStaticPaths() {
-  // Fetch all posts
-  const allPosts = await Astro.glob("../posts/*.md");
-
-  // Extract unique tags from all posts
-  const uniqueTags = [
-    ...new Set(allPosts.map((post) => post.frontmatter.tags).flat()),
-  ];
+  // Fetch all posts and tags using the serverAllPosts module
+  const allPosts = await getAllPosts();
+  const allTags = await getAllTags();
 
   // Map each unique tag to its corresponding filtered posts
-  return uniqueTags.map((tag) => {
+  return allTags.map((tag) => {
     // Filter posts based on the current tag
     const filteredPosts = allPosts.filter((post) =>
-      post.frontmatter.tags.includes(tag)
-    );
+      post.tags.includes(tag)
+    ).map(post => ({
+      frontmatter: { title: post.title },
+      url: `/posts/${post.id}` // Assuming the URL structure is based on post ID
+    }));
 
     // Return parameters and props for each tag
     return {
@@ -29,16 +36,14 @@ export async function getStaticPaths() {
 
 // Extract tag and posts from Astro params and props respectively
 const { tag } = Astro.params;
-const { posts } = Astro.props;
+const { posts } = Astro.props as { posts: AstroPost[] };
 ---
 
 <BaseLayout pageTitle={tag}>
-  <p>Posts tagged with "{tag}""</p>
+  <p>Posts tagged with "{tag}"</p>
   <ul>
-    {
-      posts.map((post) => (
-        <BlogPost url={post.url} title={post.frontmatter.title} />
-      ))
-    }
+    {posts.map((post) => (
+      <BlogPost url={post.url} title={post.frontmatter.title} />
+    ))}
   </ul>
 </BaseLayout>

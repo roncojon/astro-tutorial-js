@@ -66,13 +66,14 @@ export const POST: APIRoute = async ({ request }) => {
     const postData = await request.json();
 
     // Process the post content
-    const { title, content } = postData;
+    const { title, content, tags } = postData;
     const processedContent = await processHtmlContent(content);
 
     // Update the post in Firestore
     await db.collection('posts').doc(id ?? '').update({
       title,
       content: processedContent,
+      tags: tags || [],
     });
 
     // Return a success response

@@ -57,13 +57,14 @@ export const POST: APIRoute = async ({ request }) => {
     const postData = await request.json();
     console.log('Post data:', postData);
 
-    const { title, content } = postData;
+    const { title, content, tags } = postData;
 
     const processedContent = await processHtmlContent(content);
 
     const postRef = await db.collection('posts').add({
       title,
       content: processedContent,
+      tags: tags || [],
     });
 
     // Determine the base URL

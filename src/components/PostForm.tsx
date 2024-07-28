@@ -1,46 +1,63 @@
-// Import necessary hooks and components
 import { useState, useEffect } from 'react';
 import TinyMCEEditor from './TinyMCEEditor';
 
-// Define the props for the PostForm component
 type PostFormProps = {
-  postId?: string; // postId is optional because it's not needed when creating a new post
-}
+  postId?: string;
+};
 
-// Define the PostForm component
-const PostForm = ({ postId }:PostFormProps) => {
-  // Initialize state variables for the editor content and the post title
+const PostForm = ({ postId }: PostFormProps) => {
   const [editorContent, setEditorContent] = useState('');
   const [title, setTitle] = useState('');
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [newTag, setNewTag] = useState('');
 
-  // Use the useEffect hook to fetch post data when the component mounts
-  // and whenever the postId prop changes
   useEffect(() => {
     if (postId) {
-      // If postId is provided, we're in edit mode, so fetch the post data
       fetch(`/api/getpost?id=${postId}`)
         .then(response => response.json())
         .then(data => {
-          // Update the state variables with the fetched data
           setTitle(data.title);
           setEditorContent(data.content);
+          setSelectedTags(data.tags || []);
         });
     }
+
+    // Fetch available tags from the API
+    fetch('/api/gettags')
+      .then(response => response.json())
+      .then(data => {
+        console.log('/api/gettags_data',data);
+        setAvailableTags(data?.tags ?? []);
+      });
   }, [postId]);
 
-  // Define the handleSubmit function that will be called when the form is submitted
-  const handleSubmit = async (e:any) => {
+  const handleTagSelection = (tag: string) => {
+    setSelectedTags(prevTags =>
+      prevTags.includes(tag) ? prevTags?.filter(t => t !== tag) : [...prevTags, tag]
+    );
+  };
+
+  const handleAddTag = () => {
+    if (newTag && !availableTags?.includes(newTag)) {
+      setAvailableTags(prevTags => [...prevTags, newTag]);
+    }
+    if (newTag && !selectedTags?.includes(newTag)) {
+      setSelectedTags(prevTags => [...prevTags, newTag]);
+    }
+    setNewTag('');
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // Prepare the form data
     const formData = {
       title,
       content: editorContent,
+      tags: selectedTags,
     };
 
     try {
-      // Determine the URL based on whether we're creating or updating a post
       const url = postId ? `/api/updatepost?id=${postId}` : '/api/createpost';
-      // Send a POST request to the appropriate URL
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -49,7 +66,6 @@ const PostForm = ({ postId }:PostFormProps) => {
         body: JSON.stringify(formData),
       });
 
-      // Check the response status and show an alert message
       if (response.ok) {
         alert(`Post ${postId ? 'updated' : 'created'} successfully`);
       } else {
@@ -60,7 +76,6 @@ const PostForm = ({ postId }:PostFormProps) => {
     }
   };
 
-  // Render the form
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -80,6 +95,38 @@ const PostForm = ({ postId }:PostFormProps) => {
           initialValue={editorContent}
           onContentChange={(c) => setEditorContent(c)}
         />
+      </div>
+      <div>
+        <label>Tags</label>
+        <div>
+          {availableTags?.map((tag) => (
+            <button
+              type="button"
+              key={tag}
+              onClick={() => handleTagSelection(tag)}
+              style={{
+                backgroundColor: selectedTags.includes(tag) ? 'lightblue' : 'white',
+                margin: '0 5px',
+                padding: '5px',
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+              }}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+        <div>
+          <input
+            type="text"
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            placeholder="Add new tag"
+          />
+          <button type="button" onClick={handleAddTag}>
+            Add Tag
+          </button>
+        </div>
       </div>
       <button type="submit">{postId ? 'Update' : 'Create'} Post</button>
     </form>
