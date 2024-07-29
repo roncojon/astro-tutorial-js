@@ -1,20 +1,7 @@
 import { useState, useEffect } from 'react';
 import TinyMCEEditor from './TinyMCEEditor';
-// import { getIdToken } from './auth'; // Import the getIdToken function
-// import { clientApp } from '@/firebase/client';
-// import {
-//   getAuth,
-// } from "firebase/auth";
-
-// export const getIdToken = async () => {
-//   const auth = getAuth(clientApp);
-//   const user = auth.currentUser;
-  
-//   if (user) {
-//     return user.getIdToken();
-//   }
-//   return null;
-// };
+import { clientApp } from '@/firebase/client';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 type PostFormProps = {
   postId?: string;
@@ -26,6 +13,23 @@ const PostForm = ({ postId }: PostFormProps) => {
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
+  const [idToken, setIdToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const auth = getAuth(clientApp);
+
+    // Listen for authentication state changes
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token = await user.getIdToken();
+        setIdToken(token);
+      } else {
+        setIdToken(null);
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, []);
 
   useEffect(() => {
     if (postId) {
@@ -72,18 +76,17 @@ const PostForm = ({ postId }: PostFormProps) => {
     };
 
     try {
-      // const idToken = await getIdToken(); // Get the idToken
-      // if (!idToken) {
-      //   alert('User is not authenticated');
-      //   return;
-      // }
+      if (!idToken) {
+        alert('User is not authenticated');
+        return;
+      }
 
       const url = postId ? `/api/updatepost?id=${postId}` : '/api/createpost';
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${idToken}` // Include the idToken in the headers
+          'Authorization': `Bearer ${idToken}` // Include the idToken in the headers
         },
         body: JSON.stringify(formData),
       });

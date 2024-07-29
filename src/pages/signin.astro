@@ -38,7 +38,8 @@ if (Astro.cookies.has("__session")) {
   // Import necessary Firebase Auth functions and the Firebase client app
   import {
     getAuth,
-    inMemoryPersistence,
+    // inMemoryPersistence,
+    browserLocalPersistence, 
     signInWithEmailAndPassword,
   } from "firebase/auth";
   import { clientApp } from "../firebase/client";
@@ -47,7 +48,7 @@ if (Astro.cookies.has("__session")) {
   const auth = getAuth(clientApp);
 
   // Set the persistence mode to in-memory, which prevents the browser from storing session data
-  auth.setPersistence(inMemoryPersistence);
+  auth.setPersistence(browserLocalPersistence );
 
   // Get the form element
   const form = document.querySelector("form") as HTMLFormElement;
