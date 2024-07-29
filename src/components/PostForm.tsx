@@ -1,5 +1,20 @@
 import { useState, useEffect } from 'react';
 import TinyMCEEditor from './TinyMCEEditor';
+// import { getIdToken } from './auth'; // Import the getIdToken function
+// import { clientApp } from '@/firebase/client';
+// import {
+//   getAuth,
+// } from "firebase/auth";
+
+// export const getIdToken = async () => {
+//   const auth = getAuth(clientApp);
+//   const user = auth.currentUser;
+  
+//   if (user) {
+//     return user.getIdToken();
+//   }
+//   return null;
+// };
 
 type PostFormProps = {
   postId?: string;
@@ -27,7 +42,7 @@ const PostForm = ({ postId }: PostFormProps) => {
     fetch('/api/gettags')
       .then(response => response.json())
       .then(data => {
-        console.log('/api/gettags_data',data);
+        console.log('/api/gettags_data', data);
         setAvailableTags(data?.tags ?? []);
       });
   }, [postId]);
@@ -57,11 +72,18 @@ const PostForm = ({ postId }: PostFormProps) => {
     };
 
     try {
+      // const idToken = await getIdToken(); // Get the idToken
+      // if (!idToken) {
+      //   alert('User is not authenticated');
+      //   return;
+      // }
+
       const url = postId ? `/api/updatepost?id=${postId}` : '/api/createpost';
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          // 'Authorization': `Bearer ${idToken}` // Include the idToken in the headers
         },
         body: JSON.stringify(formData),
       });
