@@ -1,0 +1,111 @@
+/* Reset some basic styles */
+body, h1, p, a {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+   /* Navigation Bar */
+.navbar {
+    width: 100%;
+    background-color: var(--navbar-bg-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar .nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+  
+  .navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+  }
+  
+  .navbar .nav-links a:hover {
+    background-color: #575757;
+  }
+  
+  /* Logo or Branding */
+  .navbar .brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .hamburger {
+    display: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar .nav-links {
+      flex-direction: column;
+      background-color: #333;
+    }
+  
+    .navbar .nav-links a {
+      text-align: center;
+      padding: 1rem;
+      width: 100%;
+    }
+  
+    .hamburger {
+      display: block;
+      cursor: pointer;
+    }
+  
+    .hamburger .line {
+      width: 30px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px;
+    }
+  
+    .navbar .nav-links {
+      display: none;
+      flex-direction: column;
+    }
+  
+    .navbar.expanded .nav-links {
+      display: flex;
+    }
+  }
+  
+
+  
+  /* ... other styles ... */
+  
+  /* Dark Mode Styles */
+  html.dark .navbar {
+    --navbar-bg-color: #333;
+  }
+  
+  html.dark .navbar .nav-links a {
+    color: #fff;
+  }
+  
+  html.dark .hamburger .line {
+    background-color: #fff;
+  }
+  
+  /* Light Mode Styles */
+   html.ligth .navbar {
+    --navbar-bg-color: red;
+  }
+  
+  html.ligth .navbar .nav-links a {
+    color: yellow;
+  }
+  
+  html.ligth .hamburger .line {
+    background-color: blue;
+  }

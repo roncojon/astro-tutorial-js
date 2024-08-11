@@ -1,19 +1,63 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { serverApp } from "../firebase/server";
+import { getAuth } from "firebase-admin/auth";
+
+export const prerender = false;
+
+const auth = getAuth(serverApp);
+/* Check current session */
+if (!Astro.cookies.has("__session")) {
+  return Astro.redirect("/signin");
+}
+const sessionCookie = Astro.cookies.get("__session")?.value;
+const decodedCookie = await auth.verifySessionCookie(sessionCookie ?? "");
+const user = await auth.getUser(decodedCookie.uid);
+
+if (!user  || user.email !=='roncojon94@gmail.com') {
+  return Astro.redirect("/signin");
+}
+---
+
+<BaseLayout title="Register">
+  <h1>Register</h1>
+  <!-- <AuthCheck client:load/> -->
+  {user?.email ? (
+    <p>Welcome back {user?.email}!</p>
+  ) : (
+    <p>You need to <a href="/signin">sign in</a> to access this section.</p>
+  )}
+  <form method="post" action="/api/auth/register">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" />
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" />
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" />
+    <button type="submit">Register</button>
+  </form>
+</BaseLayout>
+
+
+<!-- ---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AuthCheck from "@/components/AuthCheck";
 
 export const prerender = false;
 ---
 
 <BaseLayout title="Register">
   <h1>Register</h1>
-  <p>Already have an account? <a href="/signin">Sign in</a></p>
+  <AuthCheck client:load/>
+
   <form method="post" action="/api/auth/register">
     <label for="name">Name</label>
     <input type="text" name="name" id="name" />
-    <label for="email" for="email">Email</label>
+    <label for="email">Email</label>
     <input type="email" name="email" id="email" />
     <label for="password">Password</label>
     <input type="password" name="password" id="password" />
-    <button type="submit">Login</button>
+    <button type="submit">Register</button>
   </form>
-</BLayout>
+</BaseLayout> -->
+

@@ -8,14 +8,39 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request, redirect }) => {
     if (!checkOrigin(request, allowedOrigins)) {
         return new Response(JSON.stringify({ error: 'Forbidden' }), {
-          status: 403,
-          headers: { 'Content-Type': 'application/json' },
+            status: 403,
+            headers: { 'Content-Type': 'application/json' },
         });
-      }
-      
+    }
+
     const auth = getAuth(serverApp);
-    console.log('Received request:', request);
-    
+
+    // Get the session cookie from request headers
+    const sessionCookie = request.headers.get('Cookie')?.split('session=')[1];
+
+    if (!sessionCookie) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
+        });
+    }
+
+    try {
+        // Verify the session cookie
+        const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
+        console.log('Authenticated user:', decodedClaims.email);
+
+        // You can now use the email or any other user information
+        if(decodedClaims.email!=='roncojon94@gmail.com') {
+            return new Response("Unauthorized", { status: 401 });
+        }
+        // for the rest of your logic here
+
+    } catch (error) {
+        console.error('Error verifying session cookie:', error);
+        return new Response("Unauthorized", { status: 401 });
+    }
+
     const formData = await request.formData();
     console.log('Form Data:', formData);
 

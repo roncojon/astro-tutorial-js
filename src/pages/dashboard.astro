@@ -13,7 +13,6 @@ const sessionCookie = Astro.cookies.get("__session")?.value;
 const decodedCookie = await auth.verifySessionCookie(sessionCookie ?? "");
 const user = await auth.getUser(decodedCookie.uid);
 
-console.log('useruseruser',user)
 if (!user) {
   return Astro.redirect("/signin");
 }

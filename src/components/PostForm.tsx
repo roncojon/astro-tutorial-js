@@ -17,8 +17,9 @@ const PostForm = ({ postId }: PostFormProps) => {
 
   useEffect(() => {
     const auth = getAuth(clientApp);
-
-    // Listen for authentication state changes
+ const uuuser = auth.currentUser
+console.log('uuuser', uuuser)
+ // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const token = await user.getIdToken();
