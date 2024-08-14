@@ -1,111 +1,92 @@
-/* Reset some basic styles */
-body, h1, p, a {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-  }
-  
-   /* Navigation Bar */
-.navbar {
-    width: 100%;
-    background-color: var(--navbar-bg-color);
+/* .header-container {
+    
+} */
+
+header {
     position: sticky;
     top: 0;
-    z-index: 1000;
-  }
-  
-  .navbar .nav-links {
+    width: 100%;
+    backdrop-filter: blur(10px); /* Apply the blur effect */
+    background-color: rgba(255, 255, 255, 0.555); /* Transparent background with some opacity */
+    z-index: 10; /* Ensure it stays above other content */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Optional: add a subtle border at the bottom */
+}
+nav {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    gap:2rem;
+    /* justify-content: center; */
     align-items: center;
-    padding: 1rem 2rem;
-  }
-  
-  .navbar .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    border-radius: 5px;
-  }
-  
-  .navbar .nav-links a:hover {
-    background-color: #575757;
-  }
-  
-  /* Logo or Branding */
-  .navbar .brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #fff;
-  }
-  
-  .hamburger {
-    display: none;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .navbar .nav-links {
-      flex-direction: column;
-      background-color: #333;
-    }
-  
-    .navbar .nav-links a {
-      text-align: center;
-      padding: 1rem;
-      width: 100%;
-    }
-  
-    .hamburger {
-      display: block;
-      cursor: pointer;
-    }
-  
-    .hamburger .line {
-      width: 30px;
-      height: 3px;
-      background-color: #fff;
-      margin: 5px;
-    }
-  
-    .navbar .nav-links {
-      display: none;
-      flex-direction: column;
-    }
-  
-    .navbar.expanded .nav-links {
-      display: flex;
-    }
-  }
-  
+    padding: 1rem;
+}
+/* Ensure the hamburger is positioned where you want it */
+.hamburger {
+    position: absolute; /* Position it relative to the nearest positioned ancestor */
+    top: 20px; /* Position at the top of the parent container */
+    right: 20px; /* Align it to the right of the parent container */
+    z-index: 10; /* Ensure it stays above other content if necessary */
+    cursor: pointer;
+}
 
-  
-  /* ... other styles ... */
-  
-  /* Dark Mode Styles */
-  html.dark .navbar {
-    --navbar-bg-color: #333;
-  }
-  
-  html.dark .navbar .nav-links a {
+.hamburger .line {
+    display: block;
+    width: 30px;
+    height: 3px;
+    margin-bottom: 5px;
+    background-color: #ff9776;
+}
+
+/* Hide the navigation menu initially */
+.nav-links {
+    display: none; /* Hidden by default */
+    position: absolute; /* Position below the hamburger */
+    top: 60px; /* Adjust based on the hamburger button's size */
+    left: 0;
+    right: 0;
+    background-color: rgb(230, 170, 150);
+    padding: 1rem;
+}
+
+/* Show the menu when expanded */
+.nav-links.expanded {
+    display: block;
+}
+
+/* Navigation links styling */
+.nav-links a {
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+    background-color: #ff9776;
+}
+
+/* Larger screens adjustments */
+@media screen and (min-width: 636px) {
+    .nav-links {
+        position: static;
+        display: block;
+        background: none;
+        padding: 0;
+    }
+
+    .nav-links a {
+        display: inline-block;
+        padding: 15px 15px;
+    }
+
+    .hamburger {
+        display: none;
+    }
+}
+
+.dark .nav-links a {
     color: #fff;
-  }
-  
-  html.dark .hamburger .line {
-    background-color: #fff;
-  }
-  
-  /* Light Mode Styles */
-   html.ligth .navbar {
-    --navbar-bg-color: red;
-  }
-  
-  html.ligth .navbar .nav-links a {
-    color: yellow;
-  }
-  
-  html.ligth .hamburger .line {
-    background-color: blue;
-  }
+}
