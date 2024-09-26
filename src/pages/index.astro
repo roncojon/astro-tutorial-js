@@ -1,12 +1,43 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Greeting from '../components/Greeting';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Greeting from "../components/Greeting";
+import SearchBar from "@/components/SearchBar/SearchBar";
+// import SearchBar from "@/components/SearchBar/SearchBar";
 
+export const prerender = false
 const pageTitle = "Home Page";
+
+interface Tag {
+  id: number;
+  name: string;
+}
+const availableTags = [
+    { id: 1, name: 'Work' },
+    { id: 2, name: 'Personal' },
+    { id: 3, name: 'Important' },
+    { id: 4, name: 'Urgent' },
+    { id: 5, name: 'Follow-Up' },
+  ];
+
+  const handleSearch = (searchTerm: string, selectedTags: Tag[]) => {
+    console.log('Search Term:', searchTerm);
+    console.log('Selected Tags:', selectedTags);
+  };
 ---
+
 <BaseLayout pageTitle={pageTitle}>
   <h2>My awesome blog subtitle</h2>
+  <!-- <SearchBar tags={availableTags} onSearch={handleSearch} client:load/> -->
+
+  <select class="select select-bordered join-item" multiple>
+    <option disabled selected>Filter</option>
+    <option selected>Sci-fi</option>
+    <option>Drama</option>
+    <option>Action Action Action Action Action</option>
+    <option>Action2</option>
+    <option>Action3</option>
+    <option>Action4</option>
+  </select>
   <!-- <Greeting messages={["Hi", "Hello", "Howdy", "Hey there"]} /> -->
   <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
-  
 </BaseLayout>
