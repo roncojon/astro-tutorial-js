@@ -7,22 +7,22 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 export const prerender = false
 const pageTitle = "Home Page";
 
-interface Tag {
-  id: number;
-  name: string;
-}
-const availableTags = [
-    { id: 1, name: 'Work' },
-    { id: 2, name: 'Personal' },
-    { id: 3, name: 'Important' },
-    { id: 4, name: 'Urgent' },
-    { id: 5, name: 'Follow-Up' },
-  ];
+// interface Tag {
+//   id: number;
+//   name: string;
+// }
+// const availableTags = [
+//     { id: 1, name: 'Work' },
+//     { id: 2, name: 'Personal' },
+//     { id: 3, name: 'Important' },
+//     { id: 4, name: 'Urgent' },
+//     { id: 5, name: 'Follow-Up' },
+//   ];
 
-  const handleSearch = (searchTerm: string, selectedTags: Tag[]) => {
-    console.log('Search Term:', searchTerm);
-    console.log('Selected Tags:', selectedTags);
-  };
+//   const handleSearch = (searchTerm: string, selectedTags: Tag[]) => {
+//     console.log('Search Term:', searchTerm);
+//     console.log('Selected Tags:', selectedTags);
+//   };
 ---
 
 <BaseLayout pageTitle={pageTitle}>
