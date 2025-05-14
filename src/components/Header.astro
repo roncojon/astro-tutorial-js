@@ -250,25 +250,6 @@ import ThemeIcon from "./ThemeIcon.astro";
 </style>
 
 <script>
-  // Toggle mobile menu when hamburger is clicked
-  const hamburger = document.querySelector('.hamburger');
-  const mobileNav = document.querySelector('.mobile-nav');
-  
-  if (hamburger && mobileNav) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      mobileNav.classList.toggle('expanded');
-    });
-    
-    // Close mobile menu when a nav link is clicked
-    const mobileNavLinks = mobileNav.querySelectorAll('.nav-link');
-    if (mobileNavLinks) {
-      mobileNavLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          mobileNav.classList.remove('expanded');
-        });
-      });
-    }
-  }
+  // Import menu.js which handles the hamburger menu functionality
+  import "../scripts/menu.js";
 </script> 
