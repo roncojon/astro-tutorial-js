@@ -5,23 +5,98 @@ import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 const { pageTitle } = Astro.props;
 ---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <!-- <script src="https://cdn.tiny.cloud/1/vsjb36bpwc9tukvutqh2wwhje0dfnurjvblcfcfi361mtd1k/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> -->
-    <title>{pageTitle}</title>
+    <meta name="description" content="Modern Blog Platform" />
+    <title>{pageTitle} | Modern Blog</title>
     <ViewTransitions />
   </head>
   <body>
     <Header />
-    <h1>{pageTitle}</h1>
-    <slot />
+    <main class="main-content">
+      <h1 class="page-title">{pageTitle}</h1>
+      <div class="content-container">
+        <slot />
+      </div>
+    </main>
     <Footer />
+    
     <script>
+      // Import theme loader
+      import { loadTheme, applyThemeVariables } from "../utils/themeLoader.js";
+      
+      // Load and apply theme
+      async function initTheme() {
+        const theme = await loadTheme();
+        applyThemeVariables(theme);
+      }
+      
+      // Initialize theme variables
+      document.addEventListener('DOMContentLoaded', initTheme);
+      
+      // Handle theme switching events for color variables
+      document.addEventListener('astro:after-swap', initTheme);
+      
+      // Import menu script
       import "../scripts/menu.js";
     </script>
   </body>
 </html>
+
+<style>
+  .main-content {
+    padding: 2rem 5%;
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--bg-main);
+    transition: background-color 0.3s ease;
+  }
+
+  .content-container {
+    width: 100%;
+    transition: color 0.3s ease;
+  }
+
+  .page-title {
+    margin-bottom: 2rem;
+    color: var(--text-heading);
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  .page-title::after {
+    content: "";
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 4rem;
+    height: 4px;
+    background-color: var(--color-primary-500);
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+  }
+  
+  :global(html.dark) .page-title::after {
+    background-color: var(--color-primary-400);
+  }
+  
+  :global(html.dark) .main-content {
+    background-color: var(--bg-main);
+  }
+  
+  /* Add responsive styling */
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 1.5rem 1rem;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>

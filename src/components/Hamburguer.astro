@@ -3,10 +3,66 @@
 ---
 
 <!-- <div class="header-container"> -->
-  <div class="hamburger">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </div>
+  <button class="hamburger" aria-label="Menu">
+    <span class="line line-1"></span>
+    <span class="line line-2"></span>
+    <span class="line line-3"></span>
+  </button>
 <!-- </div> -->
+
+<style>
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2rem;
+    height: 1.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+  }
+  
+  .hamburger .line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary-700);
+    border-radius: 10px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .hamburger:hover .line {
+    background-color: var(--color-primary-600);
+  }
+  
+  /* Active state - when menu is open */
+  .hamburger.active .line-1 {
+    transform: translateY(8px) rotate(45deg);
+  }
+  
+  .hamburger.active .line-2 {
+    opacity: 0;
+  }
+  
+  .hamburger.active .line-3 {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Dark mode */
+  :global(html.dark) .hamburger .line {
+    background-color: var(--color-primary-300);
+  }
+
+  :global(html.dark) .hamburger:hover .line {
+    background-color: var(--color-primary-200);
+  }
+  
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
 

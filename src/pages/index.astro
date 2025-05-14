@@ -26,18 +26,136 @@ const pageTitle = "Home Page";
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h2>My awesome blog subtitle</h2>
-  <!-- <SearchBar tags={availableTags} onSearch={handleSearch} client:load/> -->
-
-  <!-- <select class="select select-bordered join-item" multiple>
-    <option disabled selected>Filter</option>
-    <option selected>Sci-fi</option>
-    <option>Drama</option>
-    <option>Action Action Action Action Action</option>
-    <option>Action2</option>
-    <option>Action3</option>
-    <option>Action4</option>
-  </select> -->
-  <!-- <Greeting messages={["Hi", "Hello", "Howdy", "Hey there"]} /> -->
-  <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
+  <div class="home-container">
+    <section class="hero-section">
+      <h2 class="hero-subtitle">Welcome to our Modern Blog Platform</h2>
+      <p class="hero-description">
+        Discover insightful articles, tutorials, and updates from our team of writers.
+        Share your thoughts and join our growing community.
+      </p>
+    </section>
+    
+    <section class="greeting-section">
+      <div class="greeting-container">
+        <h3 class="section-title">Greetings from around the world</h3>
+        <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
+      </div>
+    </section>
+    
+    <section class="features-section">
+      <h3 class="section-title">Explore our features</h3>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h4>Dynamic Content</h4>
+          <p>Create and manage all your blog posts with our intuitive editor</p>
+        </div>
+        <div class="feature-card">
+          <h4>Responsive Design</h4>
+          <p>Your blog looks beautiful on any device, from desktop to mobile</p>
+        </div>
+        <div class="feature-card">
+          <h4>Theme Customization</h4>
+          <p>Personalize your blog with custom themes and color schemes</p>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .home-container {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .hero-section {
+    margin-bottom: 3rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 2rem;
+    color: var(--text-heading);
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .hero-description {
+    font-size: 1.2rem;
+    color: var(--text-main);
+    line-height: 1.6;
+    max-width: 800px;
+    transition: color 0.3s ease;
+  }
+  
+  .greeting-section {
+    margin-bottom: 3rem;
+  }
+  
+  .greeting-container {
+    padding: 1.5rem;
+    background-color: var(--bg-card);
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    color: var(--text-heading);
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+  }
+  
+  .features-section {
+    margin-bottom: 3rem;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .feature-card {
+    padding: 1.5rem;
+    background-color: var(--bg-card);
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .feature-card h4 {
+    font-size: 1.2rem;
+    color: var(--text-heading);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+  }
+  
+  .feature-card p {
+    color: var(--text-main);
+    transition: color 0.3s ease;
+  }
+  
+  :global(html.dark) .feature-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .hero-subtitle {
+      font-size: 1.5rem;
+    }
+    
+    .hero-description {
+      font-size: 1rem;
+    }
+    
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -7,12 +7,59 @@ const pageTitle = "My Astro Learning Blog";
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h2>Here you can see all the posts:</h2>
-  <ul>
-    {
-      serverAllPosts.map((post) => (
+  <div class="blog-container">
+    <div class="blog-header">
+      <h2 class="blog-subtitle">All blog posts</h2>
+      <p class="blog-description">Discover our latest articles and updates</p>
+    </div>
+    
+    <ul class="blog-list">
+      {
+        serverAllPosts.map((post) => (
           <BlogPost url={`/posts/${post.id}`} title={post.title} postId={post.id} />
-      ))
-    }
-  </ul>
+        ))
+      }
+    </ul>
+  </div>
 </BaseLayout>
+
+<style>
+  .blog-container {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .blog-header {
+    margin-bottom: 2rem;
+  }
+  
+  .blog-subtitle {
+    font-size: 1.8rem;
+    color: var(--text-heading);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+  }
+  
+  .blog-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    transition: color 0.3s ease;
+  }
+  
+  .blog-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .blog-subtitle {
+      font-size: 1.5rem;
+    }
+    
+    .blog-description {
+      font-size: 1rem;
+    }
+  }
+</style>

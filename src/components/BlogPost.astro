@@ -4,7 +4,52 @@ import BlogPostCrud from "./BlogPostCrud";
 const { url, title, postId } = Astro.props; // Destructure props to get the post URL, title, and postId
 ---
 
-<li style="display: flex; gap: 8px">
-  <a href={url}>{title}</a>
+<li class="blog-post-item">
+  <a href={url} class="blog-post-link">{title}</a>
   <BlogPostCrud client:only="react" url={url} postId={postId} />
 </li>
+
+<style>
+  .blog-post-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .blog-post-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .blog-post-link {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-heading);
+    text-decoration: none;
+    flex: 1;
+    transition: color 0.3s ease;
+  }
+  
+  .blog-post-link:hover {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+  
+  :global(html.dark) .blog-post-item {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  :global(html.dark) .blog-post-item:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  :global(html.dark) .blog-post-link:hover {
+    color: var(--color-primary-400);
+  }
+</style>
